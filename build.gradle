@@ -1,0 +1,63 @@
+group 'SpringDroolsTest'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE"
+    }
+}
+
+
+
+jar {
+    baseName = 'accident-rules-rest-service'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://repository.jboss.org/nexus/content/groups/public/'
+    }
+}
+
+ext {
+    droolsVersion = "7.0.0.Final"
+    spockVersion = "1.0-groovy-2.4"
+}
+
+test {
+
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.kie:kie-api:${droolsVersion}"
+    compile "org.drools:drools-compiler:${droolsVersion}"
+    // https://mvnrepository.com/artifact/com.fasterxml/jackson-module-json-org
+    compile group: 'com.fasterxml', name: 'jackson-module-json-org', version: '0.9.1'
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'joda-time', name: 'joda-time', version: '2.3'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile "org.spockframework:spock-core:${spockVersion}"
+}

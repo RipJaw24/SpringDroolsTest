@@ -1,0 +1,11 @@
+import rules.Accident;
+
+dialect  "mvel"
+
+rule "determine accident is applicable"
+    when
+        accident:Accident(payment > 200);
+    then
+        accident.setApplicable(true)
+end
+
